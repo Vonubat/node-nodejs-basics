@@ -1,13 +1,12 @@
 import { createWriteStream } from 'fs';
 import { stdin } from 'process';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import { getPath } from '../utils/index.js';
+
+const fileName = 'fileToWrite.txt';
+const src = getPath(import.meta.url, ['./files', fileName]);
 
 const write = async () => {
-  const __dirname = fileURLToPath(new URL('.', import.meta.url));
-  const src = path.resolve(__dirname, './files/fileToWrite.txt');
-
-  const writable = createWriteStream(src);
+  const writable = createWriteStream(src, { flags: 'a' });
   stdin.pipe(writable);
 };
 
