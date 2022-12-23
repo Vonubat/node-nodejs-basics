@@ -1,12 +1,12 @@
-import { fileURLToPath } from 'url';
+import { getPath, getDirname, getFilename } from '../utils/index.js';
 import { release, version } from 'os';
 import { createServer as createServerHttp } from 'http';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import './files/c.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __filename = getFilename(import.meta.url);
+const __dirname = getDirname(import.meta.url);
 
 const random = Math.random();
 
@@ -15,11 +15,11 @@ const getUnknownObject = async () => {
 
   if (random > 0.5) {
     json = JSON.parse(
-      await readFile(new URL('./files/a.json', import.meta.url))
+      await readFile(getPath(import.meta.url, ['./files/a.json']))
     );
   } else {
     json = JSON.parse(
-      await readFile(new URL('./files/b.json', import.meta.url))
+      await readFile(getPath(import.meta.url, ['./files/b.json']))
     );
   }
 
