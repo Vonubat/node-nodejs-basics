@@ -1,14 +1,12 @@
-import { fileURLToPath } from 'url';
 import { Worker } from 'worker_threads';
-import path from 'path';
 import os from 'os';
+import { getPath } from '../utils/index.js';
+
+const workerDest = getPath(import.meta.url, ['./worker.js']);
 
 const performCalculations = async () => {
-  const __dirname = fileURLToPath(new URL('.', import.meta.url));
-  const workerDest = path.resolve(__dirname, './worker.js');
-  const cpus = os.cpus().length;
-
   let increment = 10;
+  const cpus = os.cpus().length;
   const result = [];
 
   const createWorker = () => {
