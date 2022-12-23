@@ -1,14 +1,14 @@
 const { createHash } = await import('node:crypto');
-import { fileURLToPath } from 'url';
+import { getPath } from '../utils/index.js';
 import { readFile } from 'fs/promises';
-import path from 'path';
+
+const fileName = 'fileToCalculateHashFor.txt';
+const src = getPath(import.meta.url, ['./files', fileName]);
 
 const calculateHash = async () => {
-  const __dirname = fileURLToPath(new URL('.', import.meta.url));
-  const src = path.resolve(__dirname, './files/fileToCalculateHashFor.txt');
-  const file = await readFile(src, { encoding: 'utf8' });
-
+  const file = await readFile(src);
   const hash = createHash('sha256').update(file).digest('hex');
+
   console.log(hash);
 };
 
