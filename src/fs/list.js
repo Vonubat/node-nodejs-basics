@@ -1,18 +1,14 @@
-import { fileURLToPath } from 'url';
-import path from 'path';
 import { readdir } from 'fs/promises';
+import { getPath } from '../utils/index.js';
+
+const src = getPath(import.meta.url, ['./files']);
 
 const list = async () => {
   try {
-    const __dirname = fileURLToPath(new URL('.', import.meta.url));
-    const src = path.resolve(__dirname, './files');
-
     const files = await readdir(src);
-    for (const file of files) {
-      console.log(file);
-    }
-  } catch (error) {
-    // console.log(error);
+    console.log(files);
+  } catch (err) {
+    // console.log(err);
     throw new Error('FS operation failed');
   }
 };

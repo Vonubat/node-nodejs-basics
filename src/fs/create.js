@@ -1,16 +1,15 @@
-import { fileURLToPath } from 'url';
 import { writeFile } from 'fs/promises';
-import path from 'path';
+import { getPath } from '../utils/index.js';
+
+const fileName = 'fresh.txt';
+const data = 'I am fresh and young';
+const dest = getPath(import.meta.url, [`./files`, fileName]);
 
 const create = async () => {
   try {
-    const __dirname = fileURLToPath(new URL('.', import.meta.url));
-    const name = 'fresh.txt';
-    const dest = path.resolve(__dirname, './files', name);
-    const data = 'I am fresh and young';
-
     await writeFile(dest, data, { flag: 'wx' });
-  } catch {
+  } catch (err) {
+    // console.error(err);
     throw new Error('FS operation failed');
   }
 };

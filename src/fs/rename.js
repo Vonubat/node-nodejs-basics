@@ -1,6 +1,10 @@
-import { fileURLToPath } from 'url';
-import path from 'path';
 import { rename as renameFile, access } from 'fs/promises';
+import { getPath } from '../utils/index.js';
+
+const srcFileName = 'wrongFilename.txt';
+const src = getPath(import.meta.url, ['./files', srcFileName]);
+const destFileName = 'properFilename.md';
+const dest = getPath(import.meta.url, ['./files', destFileName]);
 
 const exists = async (path) => {
   try {
@@ -13,18 +17,14 @@ const exists = async (path) => {
 
 const rename = async () => {
   try {
-    const __dirname = fileURLToPath(new URL('.', import.meta.url));
-    const src = path.resolve(__dirname, './files/wrongFilename.txt');
-    const dest = path.resolve(__dirname, './files/properFilename.md');
-
     const isExist = await exists(dest);
     if (isExist) {
       throw isExist;
     }
 
     await renameFile(src, dest);
-  } catch (error) {
-    // console.log(error);
+  } catch (err) {
+    // console.log(err);
     throw new Error('FS operation failed');
   }
 };
